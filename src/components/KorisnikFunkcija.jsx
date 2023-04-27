@@ -1,6 +1,13 @@
-export default function KorisnikFunkcija({ime, godine}) {
+export default function KorisnikFunkcija({ime, godine, onNameChange}) {
     
     return (
-        <p>Moje ime je {ime} i imam {godine} godina.</p>
+        <div>
+        <p>Zadatak 11 Moje ime je {ime} i imam {godine} godina.</p>
+        <input 
+        type="text" 
+        value={ime}
+        onChange={onNameChange}
+        ></input>
+        </div>
     );
 }

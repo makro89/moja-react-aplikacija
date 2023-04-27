@@ -37,29 +37,33 @@ import KorisnikDijete from './KorisnikDijete';
 //  }
 // }
 
-class App extends React.Component {
-  state = {
-    korisnici : [
-      {ime: "MArko", godine: 27 },
+function App(){
+  
+  const [korisnici, setKorisnici] = React.useState ([
+      {ime: "Marko", godine: 27 },
       {ime: "Katarina", godine: 21 },
       {ime: "Nataša", godine: 20 },
       {ime: "Sunčica", godine: 5 },
-    ],
-    dodatni_tekst : "Ona voli plivati i gnjuriti."
-    };
+    
+    //dodatni_tekst : "Ona voli plivati i gnjuriti."
+  ]);
 
-    promijeniGodine = () => {
+    const promijeniGodine = () => {
      // console.log("kliknuli smo na button");
-      const {korisnici} = this.state;
+     // const {korisnici} = this.state;
       const novikorisnici = korisnici.map( korisnik =>
         {
           return {...korisnik, godine: korisnik.godine + 1 }}
         );
-        this.setState({korisnici: novikorisnici});
+        setKorisnici(novikorisnici);
     }
-  render() {
 
-    const {korisnici, dodatni_tekst} = this.state;
+    const promijeniIme = event => {
+      console.log("test");
+    }
+ 
+
+    //const {korisnici, dodatni_tekst} = this.state;
 
   var zbroj = sum(10, 12) * pi + (broj1 * broj2);
   var rndStr =randomstring.generate({
@@ -100,19 +104,19 @@ class App extends React.Component {
       <WelcomeFunkcija />
       <WelcomeKlasa/>
 
-<KorisnikKlasa ime={korisnici[0].ime} godine={korisnici[0].godine} onButtonClick={this.promijeniGodine}/>
-<KorisnikKlasa ime={korisnici[1].ime} godine={korisnici[1].godine}onButtonClick={this.promijeniGodine}/>
+<KorisnikKlasa ime={korisnici[0].ime} godine={korisnici[0].godine} onButtonClick={promijeniGodine}/>
+<KorisnikKlasa ime={korisnici[1].ime} godine={korisnici[1].godine}onButtonClick={promijeniGodine}/>
 
-<KorisnikFunkcija ime={korisnici[2].ime} godine={korisnici[2].godine}/>
+<KorisnikFunkcija ime={korisnici[2].ime} godine={korisnici[2].godine} onNameChange={promijeniIme}/>
 
 <KorisnikDijete ime={korisnici[3].ime} godine={korisnici[3].godine}>
-{dodatni_tekst}
+neki tekst
 </KorisnikDijete>
 
 
     </div>
   );
 }
-}
+
 
 export default App;
