@@ -1,65 +1,74 @@
-import React from "react";
-import KorisnikKomponenta from `.KorisniKomponenta`;
-import NoviKorisnikKomponenta from `.NoviKorisnikKomponenta`;
+import React from 'react';
+import KorisnikKomponenta from './KorisnikKomponenta';
+import NoviKorisnikKomponenta from './NoviKorisnikKomponenta';
 
 export default class AppForme2 extends React.Component {
-    state = {
-        korisnici: [
-            {id: 1, ime: 'Ivan', godine: 30},
-            {id: 2, ime: 'Marko', godine: 35},
-            {id: 3, ime: 'Ana', godine: 25},
-        ],
-    };
+  state = {
+    korisnici: [
+      { id: new Date().getMilliseconds(), ime: 'Ivan', godine: 30 },
+      { id: new Date().getMilliseconds(), ime: 'Marko', godine: 35 },
+      { id: new Date().getMilliseconds(), ime: 'Ana', godine: 25 },
+    ],
+  };
 
-   handleButtonPress = () => {
-       const { korisnici } = this.state;
+  handleButtonPress = () => {
+    const { korisnici } = this.state;
 
-       const noviKorisnici = korisnici.map(korisnik) => {
-           return {...korisnik, godine: korisnik.godine + 1};
-       
-   });
-    
-this.setState({ korisnici: noviKorisnici});
-   };
+    const noviKorisnici = korisnici.map(korisnik => {
+      return { ...korisnik, godine: korisnik.godine + 1 };
+    });
 
-   handleNameChange = (event, index) => {
-       const { korisnici } = this.state;
-       const noviKorisnici = [...korisnici];
+    this.setState({ korisnici: noviKorisnici });
+  };
 
-       noviKorisnici[index].ime = event.target.value;
-       this.setState({ korisnici: noviKorisnici});
-   };
+  handleNameChange = (event, index) => {
+    const { korisnici } = this.state;
+    const noviKorisnici = [...korisnici];
 
-   handleDeleteUser = index => {
-       let noviKorisnici = [...this.state.korisnici];
-       noviKorisnici.splice(index, 1);
+    noviKorisnici[index].ime = event.target.value;
+    this.setState({ korisnici: noviKorisnici });
+  };
 
-       this.setState({ korisnici: noviKorisnici});
-   }
+  handleDeleteUser = index => {
+    let noviKorisnici = [...this.state.korisnici];
+    noviKorisnici.splice(index, 1);
 
-addNewUser = ({ ime, godine}) => {
+    this.setState({ korisnici: noviKorisnici });
+  };
+
+  addNewUser = ({ ime, godine }) => {
     const noviKorisnik = {
-        id: `${ime}_${new.Date().getMilliseconds}`,
-        ime,
-        godine,
+      id: `${ime}_${new Date().getMilliseconds()}`,
+      ime,
+      godine,
     };
-    this.setState({ korisnici: [...this.state.korisnici, noviKorisnik]});
-};
 
-render( {
+    this.setState({ korisnici: [...this.state.korisnici, noviKorisnik] });
+  };
+
+  render() {
     const { korisnici } = this.state;
 
     return (
-        <div>
-        <h1React aplikacija</div>
+      <div>
+        <h1>React aplikacija</h1>
         <p>5.15 - Forme 2</p>
         <button onClick={this.handleButtonPress}>Promjena godina</button>
-        </div>
-    )
-})
 
+        {korisnici.map((korisnik, index) => (
+          <KorisnikKomponenta
+            key={korisnik.id}
+            ime={korisnik.ime}
+            godine={korisnik.godine}
+            onNameChange={event => this.handleNameChange(event, index)}
+            onDelete={() => this.handleDeleteUser(index)}
+          />
+        ))}
 
-
-
+        <NoviKorisnikKomponenta onUserSubmit={this.addNewUser} />
+      </div>
+    );
+  }
+}
 
   
