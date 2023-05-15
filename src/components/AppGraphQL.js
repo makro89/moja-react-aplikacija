@@ -3,10 +3,21 @@ import React from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { createHttpLink } from 'apollo-link-http';
+import { ApolloClient } from '@apollo/react-hooks';
+
+const httpLink = new createHttpLink({
+    uri: 'https://48p1r2roz4.sse.codesandbox.io'
+})
 
 const client = new ApolloClient({
-  uri: 'https://48p1r2roz4.sse.codesandbox.io',
+    link: httpLink,
+    cache: new InMemoryCache()
 });
+// const client = new createHttpLink({
+//   uri: 'https://48p1r2roz4.sse.codesandbox.io',
+// });
 
 function ExchangeRates() {
   const { loading, error, data } = useQuery(gql`
